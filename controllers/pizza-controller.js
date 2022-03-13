@@ -22,17 +22,10 @@ const pizzaController = {
     Pizza.findOne({ _id: params.id })
       .populate({
         path: "comments",
-        select: "-__v",
+        select: "-v",
       })
-      .select("-__v")
-      .then((dbPizzaData) => {
-        //if no pizza found send 404
-        if (!dbPizzaData) {
-          res.status(404).json({ message: "No pizza found with this id!" });
-          return;
-        }
-        res.json(dbPizzaData);
-      })
+      .select("-v")
+      .then((dbPizzaData) => res.json(dbPizzaData))
       .catch((err) => {
         console.log(err);
         res.status(400).json(err);
